@@ -1,0 +1,108 @@
+{
+  "target_column": "classification",
+  "target_classes": {
+    "positive_class": "ckd",
+    "negative_class": "notckd"
+  },
+  "numeric_features": [
+    "age",
+    "bp",
+    "sg",
+    "al",
+    "su",
+    "bgr",
+    "bu",
+    "sc",
+    "sod",
+    "pot",
+    "hemo",
+    "pcv",
+    "wc",
+    "rc"
+  ],
+  "categorical_features": [
+    "rbc",
+    "pc",
+    "pcc",
+    "ba",
+    "htn",
+    "dm",
+    "cad",
+    "appet",
+    "pe",
+    "ane"
+  ],
+  "categorical_allowed_values": {
+    "rbc": [
+      "normal",
+      "abnormal"
+    ],
+    "pc": [
+      "normal",
+      "abnormal"
+    ],
+    "pcc": [
+      "present",
+      "notpresent"
+    ],
+    "ba": [
+      "present",
+      "notpresent"
+    ],
+    "htn": [
+      "yes",
+      "no"
+    ],
+    "dm": [
+      "yes",
+      "no"
+    ],
+    "cad": [
+      "yes",
+      "no"
+    ],
+    "appet": [
+      "good",
+      "poor"
+    ],
+    "pe": [
+      "yes",
+      "no"
+    ],
+    "ane": [
+      "yes",
+      "no"
+    ]
+  },
+  "dropped_columns": [
+    "id"
+  ],
+  "n_rows_after_cleaning": 400,
+  "missing_value_counts": {
+    "age": 9,
+    "bp": 12,
+    "sg": 47,
+    "al": 46,
+    "su": 49,
+    "rbc": 152,
+    "pc": 65,
+    "pcc": 4,
+    "ba": 4,
+    "bgr": 44,
+    "bu": 19,
+    "sc": 17,
+    "sod": 87,
+    "pot": 88,
+    "hemo": 52,
+    "pcv": 71,
+    "wc": 106,
+    "rc": 131,
+    "htn": 2,
+    "dm": 2,
+    "cad": 2,
+    "appet": 1,
+    "pe": 1,
+    "ane": 1,
+    "classification": 0
+  }
+}

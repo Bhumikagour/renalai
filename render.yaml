@@ -1,0 +1,69 @@
+# RenalAI — Render Blueprint (two services)
+#
+#   renalai-backend   Docker web service  (FastAPI + sklearn + SHAP + Tesseract)
+#   renalai-frontend  Static site         (Next.js exported to plain HTML/JS)
+#
+# The frontend reads the backend's URL via `fromService`. The backend matches the
+# frontend's hostname with a regex instead of reading it back, because Render
+# rejects circular service references.
+
+services:
+  # --------------------------------------------------------------------
+  # Backend — FastAPI, Docker (needed for the tesseract binary)
+  # --------------------------------------------------------------------
+  - type: web
+    name: renalai-backend
+    runtime: docker
+    plan: free
+    region: singapore
+    rootDir: backend
+    dockerfilePath: ./Dockerfile
+    dockerContext: .
+    healthCheckPath: /health
+    envVars:
+      - key: ALLOWED_ORIGIN_REGEX
+        value: ^https://renalai-frontend[a-z0-9-]*\.onrender\.com$
+      # Optional extra exact origins (e.g. a custom domain). Set in dashboard.
+      - key: FRONTEND_URL
+        sync: false
+      # Optional: enables the AI chat assistant. Without it /chat reports
+      # "unavailable" rather than failing. Set in the Render dashboard.
+      - key: ANTHROPIC_API_KEY
+        sync: false
+      # Optional: enables nearby-specialist search via Google Places.
+      - key: GOOGLE_MAPS_API_KEY
+        sync: false
+      - key: PYTHONUNBUFFERED
+        value: "1"
+
+  # --------------------------------------------------------------------
+  # Frontend — Next.js static export (free, always-on, CDN-served)
+  # --------------------------------------------------------------------
+  - type: web
+    name: renalai-frontend
+    runtime: static
+    # No `plan:` — static sites have no plan tier, and supplying one fails
+    # validation with "no such plan free for service type web".
+    rootDir: frontend
+    buildCommand: npm ci && npm run build
+    staticPublishPath: ./out
+    envVars:
+      - key: NEXT_PUBLIC_API_URL
+        fromService:
+          type: web
+          name: renalai-backend
+          envVarKey: RENDER_EXTERNAL_URL
+    routes:
+      - type: rewrite
+        source: /*
+        destination: /index.html
+    headers:
+      - path: /*
+        name: X-Content-Type-Options
+        value: nosniff
+      - path: /*
+        name: X-Frame-Options
+        value: DENY
+      - path: /*
+        name: Referrer-Policy
+        value: strict-origin-when-cross-origin

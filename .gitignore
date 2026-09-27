@@ -1,0 +1,34 @@
+# --- Node / Next.js ---
+node_modules/
+.next/
+out/
+next-env.d.ts
+.vercel
+
+# --- Python ---
+__pycache__/
+*.py[cod]
+venv/
+.venv/
+*.egg-info/
+
+# --- Environment & secrets ---
+.env
+.env.local
+.env.*.local
+
+# --- Logs & scratch ---
+*.log
+
+# --- Editors / OS ---
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
+
+# NOTE: backend/model_artifacts/*.joblib IS committed on purpose — the API
+# loads it at startup, so it must ship with the repo (~1.7MB).
+
+# --- Runtime output written by the API at request time (ephemeral on Render) ---
+backend/uploads/
+backend/reports/

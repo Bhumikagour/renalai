@@ -1,0 +1,75 @@
+@import "tailwindcss";
+
+:root {
+  --bg: #F7F9FB;
+  --surface: #FFFFFF;
+  --ink: #101826;
+  --ink-soft: #4B5768;
+  --line: #DCE3E8;
+  --primary: #0E7C86;
+  --primary-dark: #0A5860;
+  --risk-low: #1E9E6B;
+  --risk-medium: #D98E04;
+  --risk-high: #C4432B;
+}
+
+@theme inline {
+  --color-bg: var(--bg);
+  --color-surface: var(--surface);
+  --color-ink: var(--ink);
+  --color-ink-soft: var(--ink-soft);
+  --color-line: var(--line);
+  --color-primary: var(--primary);
+  --color-primary-dark: var(--primary-dark);
+  --color-risk-low: var(--risk-low);
+  --color-risk-medium: var(--risk-medium);
+  --color-risk-high: var(--risk-high);
+  --font-display: var(--font-display-stack);
+  --font-body: var(--font-body-stack);
+  --font-mono: var(--font-mono-stack);
+}
+
+:root {
+  --font-display-stack: "Avenir Next", "Segoe UI Semibold", "Helvetica Neue", Arial, sans-serif;
+  --font-body-stack: -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  --font-mono-stack: "SF Mono", "Cascadia Code", "IBM Plex Mono", Consolas, Menlo, monospace;
+}
+
+* { box-sizing: border-box; }
+
+html, body {
+  background: var(--bg);
+  color: var(--ink);
+  font-family: var(--font-body), system-ui, sans-serif;
+}
+
+::selection { background: var(--primary); color: white; }
+
+:focus-visible {
+  outline: 2px solid var(--primary);
+  outline-offset: 2px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+@keyframes pulse-low {
+  0%, 100% { transform: scale(1); opacity: 0.55; }
+  50% { transform: scale(1.06); opacity: 0.9; }
+}
+@keyframes pulse-medium {
+  0%, 100% { transform: scale(1); opacity: 0.6; }
+  50% { transform: scale(1.12); opacity: 1; }
+}
+@keyframes pulse-high {
+  0%, 100% { transform: scale(1); opacity: 0.65; }
+  50% { transform: scale(1.2); opacity: 1; }
+}
+.ring-pulse-low { animation: pulse-low 2.6s ease-in-out infinite; }
+.ring-pulse-medium { animation: pulse-medium 1.6s ease-in-out infinite; }
+.ring-pulse-high { animation: pulse-high 0.9s ease-in-out infinite; }
